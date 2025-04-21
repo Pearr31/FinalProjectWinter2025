@@ -49,4 +49,5 @@ Used in the `OrderManager` class:
 
 ## UML CLASS DIAGRAM
 
-*(Insert UML Diagram Image Here)*
+![CLASS DIAGRAM FINAL PROJECT DONE drawio](https://github.com/user-attachments/assets/ab86122c-59fc-4f9e-9bc4-6a4ad5d75ead)
+
