@@ -1,6 +1,8 @@
-package org.example;
+package org.example.foodsystem.order;
 
-public class DeliveryOrder extends Order{
+import org.example.foodsystem.menu.MenuItem;
+
+public class DeliveryOrder extends Order {
     private String deliveryAddress;
     private double deliveryFee;
 

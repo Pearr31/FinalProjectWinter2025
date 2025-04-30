@@ -1,4 +1,4 @@
-package org.example;
+package org.example.foodsystem.user;
 
 public abstract class User {
    private String username;
@@ -10,5 +10,14 @@ public abstract class User {
         this.password = password;
     }
 
+    public boolean validatePassword(String inputPassword) {
+        return this.password.equals(inputPassword);
+    }
+
     public abstract void viewDashboard();
+
+    public String getUsername() {
+        return username;
+    }
+
 }

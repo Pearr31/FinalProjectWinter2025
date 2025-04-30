@@ -1,4 +1,4 @@
-import org.example.MenuItem;
+import org.example.foodsystem.menu.MenuItem;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

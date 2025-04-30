@@ -1,6 +1,5 @@
-package org.example;
+package org.example.foodsystem.menu;
 
-import java.awt.*;
 import java.util.Comparator;
 import java.util.Objects;
 

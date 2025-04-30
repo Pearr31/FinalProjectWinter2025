@@ -1,4 +1,6 @@
-package org.example;
+package org.example.foodsystem.order;
+
+import org.example.foodsystem.menu.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
