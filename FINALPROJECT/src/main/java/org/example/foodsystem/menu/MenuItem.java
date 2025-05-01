@@ -1,17 +1,19 @@
 package org.example.foodsystem.menu;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 public class MenuItem implements Comparable<MenuItem> {
     private String name;
-    private double price;
     private String genre;
+    private double price;
 
-    public MenuItem(String name, double price, String genre) {
+    public MenuItem(String name, String genre, double price) {
         this.name = name;
-        this.price = price;
         this.genre = genre;
+        this.price = price;
     }
 
 

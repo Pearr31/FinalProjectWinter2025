@@ -1,20 +1,32 @@
 package org.example.foodsystem.order;
 
 import org.example.foodsystem.menu.MenuItem;
+import org.example.foodsystem.user.Driver;
+
+import java.util.List;
 
 public class DeliveryOrder extends Order {
-    private String deliveryAddress;
-    private double deliveryFee;
+    private Driver driver;
+    private String customerAddress;
+    private static final double DELIVERY_FEE = 5.0;
 
-    public DeliveryOrder(int orderId, String deliveryAddress, double deliveryFee) {
-        super(orderId);
-        this.deliveryAddress = deliveryAddress;
-        this.deliveryFee = deliveryFee;
+    public DeliveryOrder(int orderId, List<MenuItem> items, Driver driver, String customerAddress) {
+        super(orderId, items);
+        this.driver = driver;
+        this.customerAddress = customerAddress;
     }
-
 
     @Override
     public double calculateTotal() {
-        return items.stream().mapToDouble(MenuItem::getPrice).sum() + deliveryFee;
+        double subtotal = items.stream().mapToDouble(MenuItem::getPrice).sum();
+        return subtotal + DELIVERY_FEE;
     }
+
+    @Override
+    public void displayOrderDetails() {
+        System.out.println("Delivery Order ID: " + orderId + " Total Price: " + totalPrice + " Driver: " + driver.getUsername() + " Address: " + customerAddress + " Status: " + status);
+
+    }
+
+
 }

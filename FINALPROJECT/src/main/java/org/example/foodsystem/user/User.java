@@ -1,8 +1,8 @@
 package org.example.foodsystem.user;
 
 public abstract class User {
-   private String username;
-   private String password;
+    private String username;
+    private String password;
 
 
     public User(String username, String password) {
@@ -15,6 +15,17 @@ public abstract class User {
     }
 
     public abstract void viewDashboard();
+
+    /**
+     * allows user to login
+     * @param username provided username
+     * @param password provided password
+     * @return true if credentials match else false
+     */
+    public boolean login(String username, String password) {
+        //implement logic to login
+        return false;
+    }
 
     public String getUsername() {
         return username;

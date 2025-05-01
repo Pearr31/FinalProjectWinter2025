@@ -1,32 +1,46 @@
 package org.example.foodsystem.user;
 
 import org.example.foodsystem.order.Order;
-import org.example.foodsystem.order.ProcessOrder;
+import org.example.foodsystem.order.ProcessableOrder;
+import org.example.foodsystem.order.TakeoutOrder;
 
-public class Admin extends User {
-    private final String adminId;
+public class Admin extends User implements ProcessableOrder {
+    private final String roleCode;
+    private boolean authenticated;
 
-    public Admin(String username, String password, String adminId) {
+    public Admin(String username, String password, String roleCode) {
         super(username, password);
-        this.adminId = adminId;
+        this.roleCode = roleCode;
+        this.authenticated = false;
     }
 
-    public void addMenuItem(String name, double price, String genre) {
-
+    public boolean login(String username, String password, String roleCode) {
+        //TODO implement login logic with specific roleCode's for driver and admin
+        return false;
     }
 
-    public void addDiscountCode(String code) {
-
+    public void assignPickupTime(TakeoutOrder order, String pickupTime) {
+        if (authenticated) {
+            order.setPickupTime(pickupTime);
+        } else {
+            System.out.println("access denied - admin not authenticated");
+        }
     }
+
+
+    @Override
+    public void processOrder(Order order) {
+        //TODO add admin's ability to set order status
+    }
+
 
     @Override
     public void viewDashboard() {
-        System.out.println("Admin Dashboard:");
-        System.out.println("1. Manage Users");
-        System.out.println("2. View System Reports");
-        System.out.println("3. Add menu item");
-        System.out.println("4. Add discount code");
-        // Add admin-specific actions
+        if (authenticated) {
+            System.out.println("admin dashboard");
+        } else {
+            System.out.println("access denied - admin not authenticated");
+        }
     }
 
 
