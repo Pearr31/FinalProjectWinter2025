@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class CustomerTest {
-    private Customer customer;
+
 
     @Test
     public void testAddress_NormalInput() {
