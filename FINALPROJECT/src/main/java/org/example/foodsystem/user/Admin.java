@@ -14,6 +14,10 @@ public class Admin extends User implements ProcessableOrder {
         this.authenticated = false;
     }
 
+    /**
+     * authenticates admin with role code
+     * @param roleCode admins have role code only
+     */
     public boolean login(String username, String password, String roleCode) {
         //TODO implement login logic with specific roleCode's for driver and admin
         return false;
@@ -27,7 +31,18 @@ public class Admin extends User implements ProcessableOrder {
         }
     }
 
+    /**
+     * sets discount code for customers to use
+     * @param code
+     */
+    public void addDiscountCode(String code){
+        //TODO implement discount code logic
+    }
 
+    /**
+     * set order status
+     * @param order
+     */
     @Override
     public void processOrder(Order order) {
         //TODO add admin's ability to set order status

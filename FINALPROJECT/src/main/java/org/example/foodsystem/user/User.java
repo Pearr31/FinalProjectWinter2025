@@ -14,6 +14,9 @@ public abstract class User {
         return this.password.equals(inputPassword);
     }
 
+    /**
+     * abstract method to display user-specific dashboards
+     */
     public abstract void viewDashboard();
 
     /**
@@ -23,7 +26,7 @@ public abstract class User {
      * @return true if credentials match else false
      */
     public boolean login(String username, String password) {
-        //implement logic to login
+        //TODO implement logic to login
         return false;
     }
 

@@ -15,7 +15,10 @@ public class DeliveryOrder extends Order {
         this.driver = driver;
         this.customerAddress = customerAddress;
     }
-
+    /**
+     * calculates total order price
+     * @return order price with delivery fee
+     */
     @Override
     public double calculateTotal() {
         double subtotal = items.stream().mapToDouble(MenuItem::getPrice).sum();

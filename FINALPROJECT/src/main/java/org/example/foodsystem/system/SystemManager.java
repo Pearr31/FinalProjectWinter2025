@@ -18,7 +18,7 @@ public class SystemManager {
     }
 
     public void loadMenuItems(String filePath) {
-        //TODO filereader reads inputted csv file for menu
+        //TODO filereader reads inputted csv file to upload menu items
 
     }
 

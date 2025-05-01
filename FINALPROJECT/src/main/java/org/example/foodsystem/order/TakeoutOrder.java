@@ -13,6 +13,10 @@ public class TakeoutOrder extends Order {
         this.pickupTime = null;
     }
 
+    /**
+     * calculates total order price
+     * @return order price
+     */
     @Override
     public double calculateTotal() {
         return items.stream().mapToDouble(MenuItem::getPrice).sum();
