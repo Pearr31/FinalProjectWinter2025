@@ -18,7 +18,7 @@ public abstract class Order {
     public abstract void displayOrderDetails();
 
     public void applyDiscount(double percentOff) {
-        //TODO implement discount % being removed from total price
+    this.totalPrice -= totalPrice *percentOff;
     }
 
 

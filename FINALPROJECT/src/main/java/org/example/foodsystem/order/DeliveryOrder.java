@@ -8,7 +8,7 @@ import java.util.List;
 public class DeliveryOrder extends Order {
     private Driver driver;
     private String customerAddress;
-    private static final double DELIVERY_FEE = 5.0;
+    private static final double DELIVERY_FEE = 5.50;
 
     public DeliveryOrder(int orderId, List<MenuItem> items, Driver driver, String customerAddress) {
         super(orderId, items);
@@ -22,7 +22,7 @@ public class DeliveryOrder extends Order {
     @Override
     public double calculateTotal() {
         double subtotal = items.stream().mapToDouble(MenuItem::getPrice).sum();
-        return subtotal + DELIVERY_FEE;
+        return totalPrice = subtotal + DELIVERY_FEE;
     }
 
     @Override
@@ -30,6 +30,8 @@ public class DeliveryOrder extends Order {
         System.out.println("Delivery Order ID: " + orderId + " Total Price: " + totalPrice + " Driver: " + driver.getUsername() + " Address: " + customerAddress + " Status: " + status);
 
     }
+
+
 
 
 }

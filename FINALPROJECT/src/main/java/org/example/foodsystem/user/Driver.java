@@ -19,13 +19,20 @@ public class Driver extends User implements ProcessableOrder {
     }
 
     public boolean login(String username, String password, String roleCode) {
-        //TODO implement login logic with specific roleCode's for driver and admin
-        return false;
+        authenticated = super.login(username, password) && (this.roleCode != null && this.roleCode.equals(roleCode));
+        return authenticated;
+    }
+
+    public void logout() {
+        authenticated = false;
+        System.out.println(username + "has logged out of FoodDeliverySystem");
     }
 
     public void viewPendingOrders() {
         if (authenticated) {
-            //TODO implement pending orders logic
+            for (DeliveryOrder order : pendingOrders) {
+                order.displayOrderDetails();
+            }
         } else {
             System.out.println("access denied - driver not authenticated");
         }
@@ -33,15 +40,22 @@ public class Driver extends User implements ProcessableOrder {
 
     public void acceptOrder(DeliveryOrder order) {
         if (authenticated) {
-            //TODO implement logic to remove orders from pending orders and accept them
+            pendingOrders.remove(order);
+            order.setStatus("Out for Delivery");
+            System.out.println("Order " + order.getOrderId() + " is now out for delivery.");
         } else {
-            System.out.println("access denied - driver not authenticated");
+            System.out.println("Access denied: Driver not authenticated.");
         }
     }
 
     @Override
     public void processOrder(Order order) {
-        //TODO implement driver's ability to set order status to delivering
+        if (authenticated) {
+            order.setStatus("Delivered");
+            System.out.println("Order " + order.getOrderId() + " has been delivered to address: " + ((DeliveryOrder) order).getAddress());
+        } else {
+            System.out.println("Access denied: Driver not authenticated.");
+        }
     }
 
     @Override

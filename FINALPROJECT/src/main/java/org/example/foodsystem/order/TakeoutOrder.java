@@ -19,7 +19,7 @@ public class TakeoutOrder extends Order {
      */
     @Override
     public double calculateTotal() {
-        return items.stream().mapToDouble(MenuItem::getPrice).sum();
+        return totalPrice = items.stream().mapToDouble(MenuItem::getPrice).sum();
     }
 
     @Override

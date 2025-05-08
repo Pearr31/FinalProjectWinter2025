@@ -1,17 +1,15 @@
 package org.example.foodsystem.user;
 
+import java.util.Objects;
+
 public abstract class User {
-    private String username;
-    private String password;
+    protected String username;
+    protected String password;
 
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public boolean validatePassword(String inputPassword) {
-        return this.password.equals(inputPassword);
     }
 
     /**
@@ -21,17 +19,47 @@ public abstract class User {
 
     /**
      * allows user to login
+     *
      * @param username provided username
      * @param password provided password
      * @return true if credentials match else false
      */
     public boolean login(String username, String password) {
-        //TODO implement logic to login
-        return false;
+        return this.username.equals(username) && this.password.equals(password);
+    }
+
+    /**
+     * logs out user
+     */
+    public void logout() {
+        System.out.println(username + "logged out of system");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(username, user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(username);
     }
 
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

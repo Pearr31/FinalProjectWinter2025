@@ -1,6 +1,8 @@
 package org.example.foodsystem.user;
 
+import org.example.foodsystem.DiscountManager.DiscountManager;
 import org.example.foodsystem.menu.MenuItem;
+import org.example.foodsystem.order.DeliveryOrder;
 import org.example.foodsystem.order.Order;
 import org.example.foodsystem.order.TakeoutOrder;
 
@@ -22,11 +24,23 @@ public class Customer extends User {
     public void viewDashboard() {
         System.out.println("Customer Dashboard:");
     }
+
     /**
      * Places an order of the specified type and applies discount if valid.
      */
-    public Order placeOrder(String orderType, int orderId, List<MenuItem> items, Driver driver) {
-        return null;   //TODO implement place order logic
+    public Order placeOrder(String orderType, int orderId, List<MenuItem> items, Driver driver, String discountCode) {
+        Order order;
+        if (orderType.equalsIgnoreCase("Takeout")) {
+            order = new TakeoutOrder(orderId, items);
+        } else if (orderType.equalsIgnoreCase("Delivery") && driver != null) {
+            order = new DeliveryOrder(orderId, items, driver, address);
+        } else {
+            throw new IllegalArgumentException("invalid order type");
+        }
+        if (DiscountManager.isValidCode(discountCode)) {
+            order.applyDiscount(15);
+        }
+        return order;
     }
 
 

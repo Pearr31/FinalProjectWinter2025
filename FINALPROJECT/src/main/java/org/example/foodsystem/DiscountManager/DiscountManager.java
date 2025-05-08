@@ -16,9 +16,7 @@ public class DiscountManager {
      * @return true if valid, false if not
      */
     public static boolean isValidCode(String code) {
-        //TODO implement discount code logic
-
-        return false;
+        return code!= null && validCodes.contains(code);
     }
 
 }

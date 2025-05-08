@@ -1,5 +1,6 @@
 package org.example.foodsystem.user;
 
+import org.example.foodsystem.DiscountManager.DiscountManager;
 import org.example.foodsystem.order.Order;
 import org.example.foodsystem.order.ProcessableOrder;
 import org.example.foodsystem.order.TakeoutOrder;
@@ -19,15 +20,21 @@ public class Admin extends User implements ProcessableOrder {
      * @param roleCode admins have role code only
      */
     public boolean login(String username, String password, String roleCode) {
-        //TODO implement login logic with specific roleCode's for driver and admin
-        return false;
+        authenticated = super.login(username,password) && (this.roleCode!= null && this.roleCode.equals(roleCode));
+        return authenticated;
+    }
+
+    public void logout() {
+        authenticated = false;
+        System.out.println(username + "has logged out of FoodDeliverySystem");
     }
 
     public void assignPickupTime(TakeoutOrder order, String pickupTime) {
         if (authenticated) {
             order.setPickupTime(pickupTime);
+            order.setStatus("ready for pick up");
         } else {
-            System.out.println("access denied - admin not authenticated");
+            System.out.println("access denied: admin not authenticated");
         }
     }
 
@@ -36,7 +43,12 @@ public class Admin extends User implements ProcessableOrder {
      * @param code
      */
     public void addDiscountCode(String code){
-        //TODO implement discount code logic
+        if (authenticated) {
+            DiscountManager.addCode(code);
+            System.out.println("Discount code added: " + code);
+        } else {
+            System.out.println("Access denied: admin not authenticated");
+        }
     }
 
     /**
@@ -45,7 +57,12 @@ public class Admin extends User implements ProcessableOrder {
      */
     @Override
     public void processOrder(Order order) {
-        //TODO add admin's ability to set order status
+        if(authenticated) {
+            order.setStatus("Processed by admin");
+            System.out.println("processing order: " + order.getOrderId());
+        } else {
+            System.out.println("Access denied: admin not authenticated");
+        }
     }
 
 
