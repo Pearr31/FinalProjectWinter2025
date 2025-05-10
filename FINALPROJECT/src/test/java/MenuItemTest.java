@@ -6,14 +6,14 @@ public class MenuItemTest {
 
     @Test
     public void testMenuItemProperties() {
-        MenuItem item = new MenuItem("burger", "Fast Food", 5.99);
+        MenuItem item = new MenuItem("Burger", "Fast Food", 5.99);
 
         String expectedName = "Burger";
         String expectedGenre = "Fast Food";
         double expectedPrice = 5.99;
 
-        String result = item.getName();
-
-        Assertions.assertEquals(expectedName, result);
+        Assertions.assertEquals(expectedName, item.getName());
+        Assertions.assertEquals(expectedGenre, item.getGenre());
+        Assertions.assertEquals(expectedPrice, item.getPrice());
     }
 }
