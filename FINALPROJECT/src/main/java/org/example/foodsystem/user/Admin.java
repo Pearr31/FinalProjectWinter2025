@@ -25,7 +25,9 @@ public class Admin extends User implements ProcessableOrder {
         authenticated = super.login(username,password) && (this.roleCode!= null && this.roleCode.equals(roleCode));
         return authenticated;
     }
-
+    /**
+     * logs out user
+     */
     public void logout() {
         authenticated = false;
         System.out.println(username + " has logged out of FoodDeliverySystem");
@@ -44,6 +46,11 @@ public class Admin extends User implements ProcessableOrder {
         }
     }
 
+    /**
+     * allows admin to update order's pick up time
+     * @param order placed order by customer
+     * @param minutesFromNow time order will be ready in
+     */
     public void updatePickupTime(Order order, int minutesFromNow) {
         if (order instanceof TakeoutOrder takeout) {
             if (minutesFromNow > 75) {
@@ -75,7 +82,9 @@ public class Admin extends User implements ProcessableOrder {
         }
     }
 
-
+    /**
+     * displays admin specific dashboard
+     */
     @Override
     public void viewDashboard() {
         if (authenticated) {

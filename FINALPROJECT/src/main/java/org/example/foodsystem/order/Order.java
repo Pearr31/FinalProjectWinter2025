@@ -19,6 +19,10 @@ public abstract class Order {
 
     public abstract void displayOrderDetails();
 
+    /**
+     * logic for when discount code is applied
+     * @param percentOff set percent off
+     */
     public void applyDiscount(double percentOff) {
         this.totalPrice = totalPrice - totalPrice * percentOff;
     }

@@ -24,6 +24,9 @@ public class TakeoutOrder extends Order {
         return totalPrice = items.stream().mapToDouble(MenuItem::getPrice).sum();
     }
 
+    /**
+     * displays current order details
+     */
     @Override
     public void displayOrderDetails() {
         System.out.println("Takeout Order ID: " + orderId + " Total Price: " + totalPrice + " Pickup Time: " + pickupTime + " Status: " + status);

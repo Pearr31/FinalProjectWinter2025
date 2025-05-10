@@ -34,9 +34,9 @@ public class MenuItem implements Comparable<MenuItem> {
     @Override
     public String toString() {
         return "MenuItem{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                ", genre='" + genre + '\'' +
+                "Name='" + name + '\'' +
+                ", Price=" + price +
+                ", Genre='" + genre + '\'' +
                 '}';
     }
 

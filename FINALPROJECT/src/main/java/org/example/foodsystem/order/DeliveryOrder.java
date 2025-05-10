@@ -28,6 +28,9 @@ public class DeliveryOrder extends Order {
         return totalPrice = subtotal + DELIVERY_FEE;
     }
 
+    /**
+     * displays delivery order details
+     */
     @Override
     public void displayOrderDetails() {
         System.out.println("Delivery Order ID: " + orderId + " Total Price: " + totalPrice + " Driver: " + driver.getUsername() + " Address: " + customerAddress + " Status: " + status);

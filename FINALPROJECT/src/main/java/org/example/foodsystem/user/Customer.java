@@ -56,6 +56,9 @@ public class Customer extends User {
         return order;
     }
 
+    /**
+     * allows customer to view current order statuses
+     */
     public void viewOrderStatuses() {
         if (orderHistory.isEmpty()) {
             System.out.println("You have no orders.");
@@ -81,9 +84,5 @@ public class Customer extends User {
 
     public String getAddress() {
         return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }

@@ -6,6 +6,10 @@ import java.util.Set;
 public class DiscountManager {
     private static Set<String> validCodes = new HashSet<>();
 
+    /**
+     * adds discount code
+     * @param code set discount code
+     */
     public static void addCode(String code) {
         validCodes.add(code);
     }

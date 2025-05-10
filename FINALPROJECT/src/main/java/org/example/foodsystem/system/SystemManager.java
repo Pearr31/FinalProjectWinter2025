@@ -27,7 +27,11 @@ public class SystemManager {
         return menuItems;
     }
 
-
+    /**
+     * loads menu items from a csv file
+     * @param filePath path of loaded items
+     * @throws URISyntaxException grabs the file path of the .csv files
+     */
     public void loadMenuItems(String filePath) throws URISyntaxException {
         menuItems.clear();
         try {
@@ -60,11 +64,18 @@ public class SystemManager {
             System.out.println("Menu Items loaded from CSV:" + filePath);
 
         } catch (IOException e) {
-            System.out.println("Error loading menu items");
+            System.out.println("Error loading menu items.");
         }
 
     }
 
+
+
+    /**
+     * saves order history to csv file in target class
+     * @param order placed order by customer
+     * @param filePath path of saved items
+     */
     //prints to target csv instead of resources
     public void saveOrderToHistory(Order order, String filePath) {
         FileWriter fw = null;
@@ -108,10 +119,6 @@ public class SystemManager {
                 }
             }
         }
-    }
-
-    public void assignDeliveryToDriver(DeliveryOrder order, Driver driver) {
-        driver.acceptOrder(order);
     }
 
     public void recordOrder(Order order) {

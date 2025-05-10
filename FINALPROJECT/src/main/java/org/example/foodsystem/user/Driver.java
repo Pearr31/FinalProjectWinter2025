@@ -20,16 +20,29 @@ public class Driver extends User implements ProcessableOrder {
         this.authenticated = false; //check if necessary
     }
 
+    /**
+     * allows user to login to system
+     * @param username inputted by user
+     * @param password inputted by user
+     * @param roleCode only for driver and admin classes
+     * @return boolean value on if logged in or not
+     */
     public boolean login(String username, String password, String roleCode) {
         authenticated = super.login(username, password) && (this.roleCode != null && this.roleCode.equals(roleCode));
         return authenticated;
     }
 
+    /**
+     * terminates users actions in system
+     */
     public void logout() {
         authenticated = false;
         System.out.println(username + "has logged out of FoodDeliverySystem.");
     }
 
+    /**
+     * shows all active orders that are pending
+     */
     public void viewPendingOrders() {
         if (authenticated) {
             if (pendingOrders.isEmpty()) {
@@ -44,6 +57,10 @@ public class Driver extends User implements ProcessableOrder {
         }
     }
 
+    /**
+     * accepts a pending order driver can then deliver
+     * @param order placed order
+     */
     public void acceptOrder(DeliveryOrder order) {
         if (authenticated) {
             pendingOrders.offer(order);
@@ -54,6 +71,9 @@ public class Driver extends User implements ProcessableOrder {
         }
     }
 
+    /**
+     * delivers the accepted order
+     */
     public void deliverNextOrder() {
         if (authenticated) {
             DeliveryOrder next = pendingOrders.poll();
@@ -63,14 +83,22 @@ public class Driver extends User implements ProcessableOrder {
                 System.out.println("No deliveries to process.");
             }
         } else {
-            System.out.println("Access denied");
+            System.out.println("Access denied.");
         }
     }
 
+    /**
+     * adds placed delivery orders to pending orders
+     * @param order order placed by customer
+     */
     public void addToPendingOrders(DeliveryOrder order) {
         pendingOrders.offer(order);
     }
 
+    /**
+     * processes the order
+     * @param order placed by customer
+     */
     @Override
     public void processOrder(Order order) {
         if (authenticated) {
@@ -81,13 +109,15 @@ public class Driver extends User implements ProcessableOrder {
         }
     }
 
-
+    /**
+     * allows driver to view user specific dashboard
+     */
     @Override
     public void viewDashboard() {
         if (authenticated) {
             System.out.println("Driver dashboard");
         } else {
-            System.out.println("access denied - driver not authenticated");
+            System.out.println("Access denied: driver not authenticated.");
         }
     }
 

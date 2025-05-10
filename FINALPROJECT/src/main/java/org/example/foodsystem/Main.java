@@ -4,6 +4,7 @@ package org.example.foodsystem;
 import org.example.foodsystem.menu.MenuItem;
 import org.example.foodsystem.order.DeliveryOrder;
 import org.example.foodsystem.order.Order;
+import org.example.foodsystem.order.TakeoutOrder;
 import org.example.foodsystem.system.SystemManager;
 import org.example.foodsystem.user.Admin;
 import org.example.foodsystem.user.Customer;
@@ -53,18 +54,18 @@ public class Main {
                             }
                         }
                         case "2" -> {
-                            for (Order o : systemManager.getAllOrders()) {
-                                if (o instanceof org.example.foodsystem.order.TakeoutOrder) {
-                                    System.out.println("Takeout Order ID: " + o.getOrderId() +
+                            for (Order order : systemManager.getAllOrders()) {
+                                if (order instanceof TakeoutOrder) {
+                                    System.out.println("Takeout Order ID: " + order.getOrderId() +
                                             " | Current Pickup Time: " +
-                                            ((org.example.foodsystem.order.TakeoutOrder) o).getPickupTime());
+                                            ((TakeoutOrder) order).getPickupTime());
                                 }
                             }
 
                             System.out.print("Enter Order ID to edit: ");
                             int id = Integer.parseInt(scanner.nextLine());
 
-                            System.out.print("Enter new pickup time (in minutes from now, max 75): ");
+                            System.out.print("Enter new pickup time (max 75 minutes from now): ");
                             int newTime = Integer.parseInt(scanner.nextLine());
 
                             for (Order o : systemManager.getAllOrders()) {
@@ -100,7 +101,7 @@ public class Main {
                         case "2" -> {
                             System.out.print("Type 'drive' to deliver next order: ");
                             String action = scanner.nextLine().trim();
-                            if (action.equalsIgnoreCase("drive")) {
+                            if (action.equalsIgnoreCase("Drive")) {
                                 driver.deliverNextOrder();
                             }
                         }
