@@ -10,10 +10,11 @@ public class DeliveryOrder extends Order {
     private String customerAddress;
     private static final double DELIVERY_FEE = 5.50;
 
-    public DeliveryOrder(int orderId, List<MenuItem> items, Driver driver, String customerAddress) {
-        super(orderId, items);
+    public DeliveryOrder(List<MenuItem> items, Driver driver, String customerAddress) {
+        super(items);
         this.driver = driver;
         this.customerAddress = customerAddress;
+        this.orderType = "Delivery";
     }
     /**
      * calculates total order price
@@ -31,7 +32,7 @@ public class DeliveryOrder extends Order {
 
     }
 
-
-
-
+    public String getAdress() {
+        return customerAddress;
+    }
 }

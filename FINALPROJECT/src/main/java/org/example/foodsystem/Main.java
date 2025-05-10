@@ -1,26 +1,30 @@
 package org.example.foodsystem;
 
+
 import org.example.foodsystem.menu.MenuItem;
+import org.example.foodsystem.order.DeliveryOrder;
 import org.example.foodsystem.order.Order;
+import org.example.foodsystem.system.SystemManager;
 import org.example.foodsystem.user.Admin;
 import org.example.foodsystem.user.Customer;
 import org.example.foodsystem.user.Driver;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        SystemManager systemManager = new SystemManager();
+        systemManager.loadMenuItems("FINALPROJECT/src/main/resources/menu_items.csv");
 
-        // Hardcoded users
         Admin admin = new Admin("admin", "admin123", "ADMIN01");
         Driver driver = new Driver("driver", "driver123", "DRIVER01");
         Customer customer = new Customer("cust", "cust123", "123 Maple St");
 
-        // Login loop
         while (true) {
-            System.out.println("\n--- Login Portal ---");
+            System.out.println("\n=== LOGIN ===");
             System.out.print("Username: ");
             String uname = scanner.nextLine();
             System.out.print("Password: ");
@@ -29,35 +33,102 @@ public class Main {
             if (admin.login(uname, pword, "ADMIN01")) {
                 System.out.println("Welcome Admin!");
                 admin.viewDashboard();
-                System.out.print("Add discount code (or press Enter to skip): ");
-                String newCode = scanner.nextLine();
-                if (!newCode.isBlank()) admin.addDiscountCode(newCode);
+
+                System.out.print("Add discount code (or Enter to skip): ");
+                String code = scanner.nextLine();
+                if (!code.isBlank()) admin.addDiscountCode(code);
+
+                System.out.print("Edit a pickup time for a takeout order? (yes/no): ");
+                if (scanner.nextLine().trim().equalsIgnoreCase("yes")) {
+                    for (Order o : systemManager.getAllOrders()) {
+                        if (o instanceof org.example.foodsystem.order.TakeoutOrder) {
+                            System.out.println("Takeout Order ID: " + o.getOrderId() +
+                                    " | Current Pickup Time: " + ((org.example.foodsystem.order.TakeoutOrder) o).getPickupTime());
+                        }
+                    }
+
+                    System.out.print("Enter Order ID to edit: ");
+                    int id = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("Enter new pickup time (in minutes from now, max 75): ");
+                    int newTime = Integer.parseInt(scanner.nextLine());
+
+                    for (Order o : systemManager.getAllOrders()) {
+                        if (o.getOrderId() == id) {
+                            admin.updatePickupTime(o, newTime);
+                            break;
+                        }
+                    }
+                }
+
                 admin.logout();
 
             } else if (driver.login(uname, pword, "DRIVER01")) {
                 System.out.println("Welcome Driver!");
                 driver.viewDashboard();
+                driver.viewPendingOrders();
+
+                System.out.print("Type 'drive' to deliver next order or Enter to skip: ");
+                if (scanner.nextLine().trim().equalsIgnoreCase("drive")) {
+                    driver.deliverNextOrder();
+                }
+
                 driver.logout();
 
             } else if (customer.login(uname, pword)) {
                 System.out.println("Welcome Customer!");
                 customer.viewDashboard();
-                List<MenuItem> orderItems = List.of(
-                        new MenuItem("Burger", "Fast Food", 10.0),
-                        new MenuItem("Fries", "Fast Food", 3.0)
-                );
-                System.out.print("Enter order type (Takeout/Delivery): ");
-                String type = scanner.nextLine();
-                System.out.print("Enter discount code if any: ");
-                String code = scanner.nextLine();
-                Order placedOrder = customer.placeOrder(type, 1, orderItems, driver, code);
-                placedOrder.displayOrderDetails();
+                customer.viewMenu(systemManager.getMenuItems());
+
+                List<MenuItem> menu = systemManager.getMenuItems();
+                List<MenuItem> selectedItems = new ArrayList<>();
+
+                System.out.println("\nChoose items (comma-separated index):");
+                for (int i = 0; i < menu.size(); i++) {
+                    System.out.println((i + 1) + ". " + menu.get(i).getName() + " - $" + menu.get(i).getPrice());
+                }
+
+                String[] choices = scanner.nextLine().split(",");
+                for (String c : choices) {
+                    try {
+                        int index = Integer.parseInt(c.trim()) - 1;
+                        if (index >= 0 && index < menu.size()) {
+                            selectedItems.add(menu.get(index));
+                        }
+                    } catch (NumberFormatException ignored) {}
+                }
+
+                if (selectedItems.isEmpty()) {
+                    System.out.println("No valid items selected.");
+                } else {
+                    System.out.print("Takeout or Delivery: ");
+                    String type = scanner.nextLine();
+
+                    System.out.print("Enter discount code (or leave empty): ");
+                    String discount = scanner.nextLine();
+
+                    Order order = customer.placeOrder(type, selectedItems, driver, discount);
+                    customer.addToOrderHistory(order);
+                    systemManager.recordOrder(order);
+                    systemManager.saveOrderToHistory(order,"FINALPROJECT/src/main/resources/order_history.csv");
+
+                    if (order instanceof DeliveryOrder dOrder) {
+                        systemManager.assignDeliveryToDriver(dOrder, driver);
+                    }
+
+                    order.displayOrderDetails();
+
+                    System.out.print("View your order statuses? (yes/no): ");
+                    if (scanner.nextLine().trim().equalsIgnoreCase("yes")) {
+                        customer.viewOrderStatuses();
+                    }
+                }
+
                 customer.logout();
 
             } else {
-                System.out.println("Invalid credentials. Try again.\n");
+                System.out.println("Invalid login. Try again.\n");
             }
         }
-
     }
 }

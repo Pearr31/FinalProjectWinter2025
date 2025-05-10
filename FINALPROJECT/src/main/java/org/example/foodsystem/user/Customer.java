@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Customer extends User {
     private String address;
+    private List<Order> orderHistory = new ArrayList<>();
 
     public Customer(String username, String password, String address) {
         super(username, password);
@@ -26,16 +27,27 @@ public class Customer extends User {
     }
 
     /**
+     * allows customer to view menuItems
+     * @param menuItems different foods
+     */
+    public void viewMenu(List<MenuItem> menuItems) {
+        System.out.println("Menu Items:");
+        for (MenuItem item : menuItems) {
+            System.out.println("- " + item.getName() + " (" + item.getGenre() + ") - $" + item.getPrice());
+        }
+    }
+
+    /**
      * Places an order of the specified type and applies discount if valid.
      */
-    public Order placeOrder(String orderType, int orderId, List<MenuItem> items, Driver driver, String discountCode) {
+    public Order placeOrder(String orderType,List<MenuItem> items, Driver driver, String discountCode) {
         Order order;
         if (orderType.equalsIgnoreCase("Takeout")) {
-            order = new TakeoutOrder(orderId, items);
+            order = new TakeoutOrder(items);
         } else if (orderType.equalsIgnoreCase("Delivery") && driver != null) {
-            order = new DeliveryOrder(orderId, items, driver, address);
+            order = new DeliveryOrder(items, driver, address);
         } else {
-            throw new IllegalArgumentException("invalid order type");
+            throw new IllegalArgumentException("Invalid order type.");
         }
         if (DiscountManager.isValidCode(discountCode)) {
             order.applyDiscount(15);
@@ -43,6 +55,28 @@ public class Customer extends User {
         return order;
     }
 
+    public void viewOrderStatuses() {
+        if (orderHistory.isEmpty()) {
+            System.out.println("You have no orders.");
+        } else {
+            for (Order order : orderHistory) {
+                System.out.print("Order ID: " + order.getOrderId() +
+                        " Type: " + order.getOrderType() +
+                        " Status: " + order.getStatus() +
+                        " Total: $" + order.getTotalPrice());
+
+                if (order instanceof TakeoutOrder takeout) {
+                    System.out.print(" Pickup Time: " + takeout.getPickupTime());
+                }
+
+                System.out.println();
+            }
+        }
+    }
+
+    public void addToOrderHistory(Order order) {
+        orderHistory.add(order);
+    }
 
     public String getAddress() {
         return address;

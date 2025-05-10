@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Order {
+    private static int nextId= 1;
     protected int orderId;
     protected List<MenuItem> items;
     protected double totalPrice;
     protected String status;
+    protected String orderType;
 
 
     public abstract double calculateTotal();
@@ -22,8 +24,8 @@ public abstract class Order {
     }
 
 
-    public Order(int orderId, List<MenuItem> items) {
-        this.orderId = orderId;
+    public Order(List<MenuItem> items) {
+        this.orderId = nextId++;
         this.items = items;
         this.totalPrice = calculateTotal();
         this.status = "Pending";
@@ -59,5 +61,9 @@ public abstract class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getOrderType() {
+        return orderType;
     }
 }

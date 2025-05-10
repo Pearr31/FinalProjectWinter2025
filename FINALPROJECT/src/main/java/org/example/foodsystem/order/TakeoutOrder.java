@@ -8,9 +8,10 @@ import java.util.List;
 public class TakeoutOrder extends Order {
     private String pickupTime;
 
-    public TakeoutOrder(int orderId, List<MenuItem> items) {
-        super(orderId, items);
-        this.pickupTime = null;
+    public TakeoutOrder(List<MenuItem> items) {
+        super(items);
+        this.pickupTime = "60 minutes from now";
+        this.orderType = "Takeout";
     }
 
     /**
@@ -31,7 +32,7 @@ public class TakeoutOrder extends Order {
         return pickupTime;
     }
 
-    public void setPickupTime(String pickupTime) {
-        this.pickupTime = pickupTime;
+    public void setPickupTime(String time) {
+        this.pickupTime = time;
     }
 }

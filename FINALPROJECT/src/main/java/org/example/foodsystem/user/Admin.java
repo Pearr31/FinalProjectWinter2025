@@ -5,6 +5,8 @@ import org.example.foodsystem.order.Order;
 import org.example.foodsystem.order.ProcessableOrder;
 import org.example.foodsystem.order.TakeoutOrder;
 
+import java.util.List;
+
 public class Admin extends User implements ProcessableOrder {
     private final String roleCode;
     private boolean authenticated;
@@ -26,16 +28,7 @@ public class Admin extends User implements ProcessableOrder {
 
     public void logout() {
         authenticated = false;
-        System.out.println(username + "has logged out of FoodDeliverySystem");
-    }
-
-    public void assignPickupTime(TakeoutOrder order, String pickupTime) {
-        if (authenticated) {
-            order.setPickupTime(pickupTime);
-            order.setStatus("ready for pick up");
-        } else {
-            System.out.println("access denied: admin not authenticated");
-        }
+        System.out.println(username + " has logged out of FoodDeliverySystem");
     }
 
     /**
@@ -50,6 +43,23 @@ public class Admin extends User implements ProcessableOrder {
             System.out.println("Access denied: admin not authenticated");
         }
     }
+
+    public void updatePickupTime(Order order, int minutesFromNow) {
+        if (order instanceof TakeoutOrder takeout) {
+            if (minutesFromNow > 75) {
+                System.out.println("Pickup time cannot exceed 75 minutes.");
+                return;
+            }
+
+            String pickupString = minutesFromNow + " minutes from now";
+            takeout.setPickupTime(pickupString);
+            takeout.setStatus("Ready for Pickup");
+            System.out.println("Pickup time for Order " + order.getOrderId() + " set to: " + pickupString);
+        } else {
+            System.out.println("This is not a takeout order.");
+        }
+    }
+
 
     /**
      * set order status
@@ -74,6 +84,8 @@ public class Admin extends User implements ProcessableOrder {
             System.out.println("access denied - admin not authenticated");
         }
     }
+
+
 
 
 }
