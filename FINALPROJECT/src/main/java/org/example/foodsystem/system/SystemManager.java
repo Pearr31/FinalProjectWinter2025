@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 import java.util.List;
 
@@ -20,15 +22,26 @@ public class SystemManager {
     private List<MenuItem> menuItems = new ArrayList<>();
     private List<Order> allOrders = new ArrayList<>();
 
+
     public List<MenuItem> getMenuItems() {
         return menuItems;
     }
 
 
-
-    public void loadMenuItems(String filePath) {
+    public void loadMenuItems(String filePath) throws URISyntaxException {
         menuItems.clear();
-        try (Scanner scanner = new Scanner(new File(filePath))) {
+        try {
+            Scanner scanner = null;
+            URL resource = getClass().getClassLoader().getResource(filePath);
+            if (resource != null) {
+                File file = new File(resource.toURI());
+                scanner = new Scanner(file);
+                System.out.println(file.getAbsolutePath());  // <-- prints full path
+            } else {
+                System.out.println("File not found!");
+            }
+
+
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
                 if (line.isEmpty()) {
@@ -53,31 +66,55 @@ public class SystemManager {
 
     }
 
+    //prints to target csv instead of resources
     public void saveOrderToHistory(Order order, String filePath) {
-        try (FileWriter fw = new FileWriter(filePath)) {
-            //for (Order order : orders) {
-                for (MenuItem item : order.getItems()) {
-                    fw.write(order.getOrderId() + ",");
-                    fw.write(order.getOrderType() + ",");
-                    fw.write(order.getStatus() + ",");
-                    fw.write(order.getTotalPrice() + ",");
-                    fw.write(item.getName() + ",");
-                    fw.write(item.getGenre() + ",");
-                    fw.write(item.getPrice() + "\n");
-                }
+        FileWriter fw = null;
+        try {
+            // Try to load the file from classpath
+            URL resource = getClass().getClassLoader().getResource(filePath);
+            System.out.println("Resource: " + resource);
 
-                if (order instanceof DeliveryOrder deliveryOrder) {
-                    fw.write("Address:," + deliveryOrder.getAdress() + "\n");
-                }
+            if (resource != null) {
+                File file = new File(resource.toURI());
+                fw = new FileWriter(file, true); // Append mode
+                System.out.println("Absolute file path: " + file.getAbsolutePath());
+            } else {
+                // Fallback: create the file using absolute path
+                File file = new File(filePath);
+                fw = new FileWriter(file, true); // Append mode
+                System.out.println("File created at absolute path: " + file.getAbsolutePath());
+            }
 
-                if (order instanceof TakeoutOrder takeoutOrder) {
-                    fw.write("Pickup Time:," + takeoutOrder.getPickupTime() + "\n");
+            // Write order details
+            for (MenuItem item : order.getItems()) {
+                fw.write("\n");
+                fw.write(order.getOrderId() + ",");
+                fw.write(order.getOrderType() + ",");
+                fw.write(order.getTotalPrice() + ",");
+                fw.write(item.getName() + ",");
+                fw.write(item.getGenre() + ",");
+                fw.write(item.getPrice() + ",");
+            }
+
+            if (order instanceof DeliveryOrder deliveryOrder) {
+                fw.write("Address:," + deliveryOrder.getAdress() + "");
+            }
+
+            if (order instanceof TakeoutOrder takeoutOrder) {
+                fw.write("Pickup Time:," + takeoutOrder.getPickupTime() + "");
+            }
+
+            System.out.println("Order saved successfully.");
+        } catch (IOException | URISyntaxException e) {
+            System.err.println("Error saving order history: " + e.getMessage());
+        } finally {
+            if (fw != null) {
+                try {
+                    fw.close();
+                } catch (IOException e) {
+                    System.err.println("Error closing FileWriter: " + e.getMessage());
                 }
-                fw.write("________________________________\n");
-            //}
-            System.out.println("Order saved successfuly");
-        } catch (IOException e) {
-            System.out.println("Error saving order history");
+            }
         }
     }
 
