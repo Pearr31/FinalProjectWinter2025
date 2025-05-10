@@ -22,6 +22,7 @@ public class Driver extends User implements ProcessableOrder {
 
     /**
      * allows user to login to system
+     *
      * @param username inputted by user
      * @param password inputted by user
      * @param roleCode only for driver and admin classes
@@ -58,20 +59,6 @@ public class Driver extends User implements ProcessableOrder {
     }
 
     /**
-     * accepts a pending order driver can then deliver
-     * @param order placed order
-     */
-    public void acceptOrder(DeliveryOrder order) {
-        if (authenticated) {
-            pendingOrders.offer(order);
-            order.setStatus("Out for Delivery");
-            System.out.println("Order " + order.getOrderId() + " is now out for delivery.");
-        } else {
-            System.out.println("Access denied: Driver not authenticated.");
-        }
-    }
-
-    /**
      * delivers the accepted order
      */
     public void deliverNextOrder() {
@@ -89,6 +76,7 @@ public class Driver extends User implements ProcessableOrder {
 
     /**
      * adds placed delivery orders to pending orders
+     *
      * @param order order placed by customer
      */
     public void addToPendingOrders(DeliveryOrder order) {
@@ -97,6 +85,7 @@ public class Driver extends User implements ProcessableOrder {
 
     /**
      * processes the order
+     *
      * @param order placed by customer
      */
     @Override

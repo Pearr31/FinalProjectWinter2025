@@ -29,6 +29,7 @@ public class SystemManager {
 
     /**
      * loads menu items from a csv file
+     *
      * @param filePath path of loaded items
      * @throws URISyntaxException grabs the file path of the .csv files
      */
@@ -70,10 +71,10 @@ public class SystemManager {
     }
 
 
-
     /**
      * saves order history to csv file in target class
-     * @param order placed order by customer
+     *
+     * @param order    placed order by customer
      * @param filePath path of saved items
      */
     //prints to target csv instead of resources

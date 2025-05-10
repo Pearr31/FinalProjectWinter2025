@@ -21,6 +21,7 @@ public abstract class Order {
 
     /**
      * logic for when discount code is applied
+     *
      * @param percentOff set percent off
      */
     public void applyDiscount(double percentOff) {

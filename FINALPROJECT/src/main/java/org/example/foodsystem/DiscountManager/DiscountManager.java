@@ -8,6 +8,7 @@ public class DiscountManager {
 
     /**
      * adds discount code
+     *
      * @param code set discount code
      */
     public static void addCode(String code) {

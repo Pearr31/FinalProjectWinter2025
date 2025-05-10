@@ -19,12 +19,14 @@ public class Admin extends User implements ProcessableOrder {
 
     /**
      * authenticates admin with role code
+     *
      * @param roleCode admins have role code only
      */
     public boolean login(String username, String password, String roleCode) {
-        authenticated = super.login(username,password) && (this.roleCode!= null && this.roleCode.equals(roleCode));
+        authenticated = super.login(username, password) && (this.roleCode != null && this.roleCode.equals(roleCode));
         return authenticated;
     }
+
     /**
      * logs out user
      */
@@ -35,9 +37,10 @@ public class Admin extends User implements ProcessableOrder {
 
     /**
      * sets discount code for customers to use
+     *
      * @param code
      */
-    public void addDiscountCode(String code){
+    public void addDiscountCode(String code) {
         if (authenticated) {
             DiscountManager.addCode(code);
             System.out.println("Discount code added: " + code);
@@ -48,7 +51,8 @@ public class Admin extends User implements ProcessableOrder {
 
     /**
      * allows admin to update order's pick up time
-     * @param order placed order by customer
+     *
+     * @param order          placed order by customer
      * @param minutesFromNow time order will be ready in
      */
     public void updatePickupTime(Order order, int minutesFromNow) {
@@ -70,11 +74,12 @@ public class Admin extends User implements ProcessableOrder {
 
     /**
      * set order status
+     *
      * @param order
      */
     @Override
     public void processOrder(Order order) {
-        if(authenticated) {
+        if (authenticated) {
             order.setStatus("Processed by admin");
             System.out.println("processing order: " + order.getOrderId());
         } else {
@@ -93,8 +98,6 @@ public class Admin extends User implements ProcessableOrder {
             System.out.println("access denied - admin not authenticated");
         }
     }
-
-
 
 
 }
