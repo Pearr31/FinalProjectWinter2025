@@ -55,9 +55,9 @@ public class Driver extends User implements ProcessableOrder {
     }
 
     public void deliverNextOrder() {
-        if(authenticated) {
+        if (authenticated) {
             DeliveryOrder next = pendingOrders.poll();
-            if(next!= null) {
+            if (next != null) {
                 processOrder(next);
             } else {
                 System.out.println("No deliveries to process.");
@@ -80,7 +80,6 @@ public class Driver extends User implements ProcessableOrder {
             System.out.println("Access denied: Driver not authenticated.");
         }
     }
-
 
 
     @Override

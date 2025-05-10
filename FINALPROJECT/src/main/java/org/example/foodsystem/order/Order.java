@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Order {
-    private static int nextId= 1;
+    private static int nextId = 1;
     protected int orderId;
     protected List<MenuItem> items;
     protected double totalPrice;
@@ -20,7 +20,7 @@ public abstract class Order {
     public abstract void displayOrderDetails();
 
     public void applyDiscount(double percentOff) {
-    this.totalPrice = totalPrice - totalPrice * percentOff;
+        this.totalPrice = totalPrice - totalPrice * percentOff;
     }
 
 

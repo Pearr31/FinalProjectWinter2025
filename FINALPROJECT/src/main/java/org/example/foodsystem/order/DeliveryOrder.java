@@ -16,8 +16,10 @@ public class DeliveryOrder extends Order {
         this.customerAddress = customerAddress;
         this.orderType = "Delivery";
     }
+
     /**
      * calculates total order price
+     *
      * @return order price with delivery fee
      */
     @Override

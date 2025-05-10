@@ -16,6 +16,7 @@ public class TakeoutOrder extends Order {
 
     /**
      * calculates total order price
+     *
      * @return order price
      */
     @Override

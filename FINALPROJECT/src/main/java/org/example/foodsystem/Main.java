@@ -154,13 +154,13 @@ public class Main {
                             } else {
                                 String type = "";
                                 while (true) {
-                                        System.out.print("Takeout or Delivery: ");
-                                        type = scanner.nextLine().trim();
-                                        if(type.equalsIgnoreCase("Takeout") || type.equalsIgnoreCase("Delivery")) {
-                                            break;
-                                        } else {
-                                            System.out.println("Invalid input. Please enter 'Takeout' or 'Delivery'.");
-                                        }
+                                    System.out.print("Takeout or Delivery: ");
+                                    type = scanner.nextLine().trim();
+                                    if (type.equalsIgnoreCase("Takeout") || type.equalsIgnoreCase("Delivery")) {
+                                        break;
+                                    } else {
+                                        System.out.println("Invalid input. Please enter 'Takeout' or 'Delivery'.");
+                                    }
 
                                 }
                                 System.out.print("Enter discount code (or leave empty): ");
@@ -172,7 +172,7 @@ public class Main {
                                 systemManager.saveOrderToHistory(order, "order_history.csv");
 
                                 if (order instanceof DeliveryOrder dOrder) {
-                                   driver.addToPendingOrders(dOrder);
+                                    driver.addToPendingOrders(dOrder);
                                 }
 
                                 order.displayOrderDetails();

@@ -28,6 +28,7 @@ public class Customer extends User {
 
     /**
      * allows customer to view menuItems
+     *
      * @param menuItems different foods
      */
     public void viewMenu(List<MenuItem> menuItems) {
@@ -40,7 +41,7 @@ public class Customer extends User {
     /**
      * Places an order of the specified type and applies discount if valid.
      */
-    public Order placeOrder(String orderType,List<MenuItem> items, Driver driver, String discountCode) {
+    public Order placeOrder(String orderType, List<MenuItem> items, Driver driver, String discountCode) {
         Order order;
         if (orderType.equalsIgnoreCase("Takeout")) {
             order = new TakeoutOrder(items);

@@ -12,11 +12,12 @@ public class DiscountManager {
 
     /**
      * checks if discount code is valid
+     *
      * @param code inputted code
      * @return true if valid, false if not
      */
     public static boolean isValidCode(String code) {
-        return code!= null && validCodes.contains(code);
+        return code != null && validCodes.contains(code);
     }
 
 }
