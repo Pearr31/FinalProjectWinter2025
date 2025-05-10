@@ -27,9 +27,9 @@ public class Main {
         while (true) {
             System.out.println("\n=== LOGIN ===");
             System.out.print("Username: ");
-            String uname = scanner.nextLine();
+            String uname = scanner.nextLine().trim();
             System.out.print("Password: ");
-            String pword = scanner.nextLine();
+            String pword = scanner.nextLine().trim();
 
             if (admin.login(uname, pword, "ADMIN01")) {
                 System.out.println("Welcome Admin!");
@@ -42,7 +42,7 @@ public class Main {
                     System.out.println("2. Edit Pickup Time for Takeout Order");
                     System.out.println("3. Logout");
                     System.out.print("Choose an option: ");
-                    String option = scanner.nextLine();
+                    String option = scanner.nextLine().trim();
 
                     switch (option) {
                         case "1" -> {
@@ -99,7 +99,7 @@ public class Main {
                         case "1" -> driver.viewPendingOrders();
                         case "2" -> {
                             System.out.print("Type 'drive' to deliver next order: ");
-                            String action = scanner.nextLine();
+                            String action = scanner.nextLine().trim();
                             if (action.equalsIgnoreCase("drive")) {
                                 driver.deliverNextOrder();
                             }
@@ -145,22 +145,31 @@ public class Main {
                                     if (index >= 0 && index < menu.size()) {
                                         selectedItems.add(menu.get(index));
                                     }
-                                } catch (NumberFormatException ignored) {}
+                                } catch (NumberFormatException ignored) {
+                                }
                             }
 
                             if (selectedItems.isEmpty()) {
                                 System.out.println("No valid items selected.");
                             } else {
-                                System.out.print("Takeout or Delivery: ");
-                                String type = scanner.nextLine();
+                                String type = "";
+                                while (true) {
+                                        System.out.print("Takeout or Delivery: ");
+                                        type = scanner.nextLine().trim();
+                                        if(type.equalsIgnoreCase("Takeout") || type.equalsIgnoreCase("Delivery")) {
+                                            break;
+                                        } else {
+                                            System.out.println("Invalid input. Please enter 'Takeout' or 'Delivery'.");
+                                        }
 
+                                }
                                 System.out.print("Enter discount code (or leave empty): ");
                                 String discount = scanner.nextLine();
 
                                 Order order = customer.placeOrder(type, selectedItems, driver, discount);
                                 customer.addToOrderHistory(order);
                                 systemManager.recordOrder(order);
-                                systemManager.saveOrderToHistory(order,"order_history.csv");
+                                systemManager.saveOrderToHistory(order, "order_history.csv");
 
                                 if (order instanceof DeliveryOrder dOrder) {
                                     systemManager.assignDeliveryToDriver(dOrder, driver);

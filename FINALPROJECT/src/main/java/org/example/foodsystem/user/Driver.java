@@ -27,20 +27,20 @@ public class Driver extends User implements ProcessableOrder {
 
     public void logout() {
         authenticated = false;
-        System.out.println(username + "has logged out of FoodDeliverySystem");
+        System.out.println(username + "has logged out of FoodDeliverySystem.");
     }
 
     public void viewPendingOrders() {
         if (authenticated) {
             if (pendingOrders.isEmpty()) {
-                System.out.println("no pending orders");
+                System.out.println("No pending orders.");
             } else {
                 for (DeliveryOrder order : pendingOrders) {
                     order.displayOrderDetails();
                 }
             }
         } else {
-            System.out.println("access denied - driver not authenticated");
+            System.out.println("Access denied: Driver not authenticated.");
         }
     }
 
@@ -63,7 +63,7 @@ public class Driver extends User implements ProcessableOrder {
                 System.out.println("No deliveries to process.");
             }
         } else {
-            System.out.println("Acces denied");
+            System.out.println("Access denied");
         }
     }
 

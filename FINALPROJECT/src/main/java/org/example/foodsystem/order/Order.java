@@ -20,7 +20,7 @@ public abstract class Order {
     public abstract void displayOrderDetails();
 
     public void applyDiscount(double percentOff) {
-    this.totalPrice -= totalPrice *percentOff;
+    this.totalPrice = totalPrice - totalPrice * percentOff;
     }
 
 

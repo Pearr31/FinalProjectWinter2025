@@ -50,7 +50,7 @@ public class Customer extends User {
             throw new IllegalArgumentException("Invalid order type.");
         }
         if (DiscountManager.isValidCode(discountCode)) {
-            order.applyDiscount(15);
+            order.applyDiscount(0.15);
         }
         return order;
     }

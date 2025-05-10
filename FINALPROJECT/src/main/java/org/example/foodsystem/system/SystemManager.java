@@ -36,7 +36,6 @@ public class SystemManager {
             if (resource != null) {
                 File file = new File(resource.toURI());
                 scanner = new Scanner(file);
-                System.out.println(file.getAbsolutePath());  // <-- prints full path
             } else {
                 System.out.println("File not found!");
             }
@@ -70,38 +69,31 @@ public class SystemManager {
     public void saveOrderToHistory(Order order, String filePath) {
         FileWriter fw = null;
         try {
-            // Try to load the file from classpath
             URL resource = getClass().getClassLoader().getResource(filePath);
-            System.out.println("Resource: " + resource);
 
             if (resource != null) {
                 File file = new File(resource.toURI());
-                fw = new FileWriter(file, true); // Append mode
-                System.out.println("Absolute file path: " + file.getAbsolutePath());
+                fw = new FileWriter(file, true);
             } else {
-                // Fallback: create the file using absolute path
                 File file = new File(filePath);
-                fw = new FileWriter(file, true); // Append mode
-                System.out.println("File created at absolute path: " + file.getAbsolutePath());
+                fw = new FileWriter(file, true);
             }
 
-            // Write order details
             for (MenuItem item : order.getItems()) {
-                fw.write("\n");
                 fw.write(order.getOrderId() + ",");
                 fw.write(order.getOrderType() + ",");
                 fw.write(order.getTotalPrice() + ",");
                 fw.write(item.getName() + ",");
                 fw.write(item.getGenre() + ",");
-                fw.write(item.getPrice() + ",");
+                fw.write(item.getPrice() + "\n");
             }
 
             if (order instanceof DeliveryOrder deliveryOrder) {
-                fw.write("Address:," + deliveryOrder.getAdress() + "");
+                fw.write(deliveryOrder.getOrderId() + ",Address:," + deliveryOrder.getAdress() + "\n");
             }
 
             if (order instanceof TakeoutOrder takeoutOrder) {
-                fw.write("Pickup Time:," + takeoutOrder.getPickupTime() + "");
+                fw.write(takeoutOrder.getOrderId() + ",Pickup Time:," + takeoutOrder.getPickupTime() + "\n");
             }
 
             System.out.println("Order saved successfully.");
