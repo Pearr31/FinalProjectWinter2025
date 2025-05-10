@@ -67,6 +67,10 @@ public class Driver extends User implements ProcessableOrder {
         }
     }
 
+    public void addToPendingOrders(DeliveryOrder order) {
+        pendingOrders.offer(order);
+    }
+
     @Override
     public void processOrder(Order order) {
         if (authenticated) {

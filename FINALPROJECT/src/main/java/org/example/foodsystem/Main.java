@@ -172,7 +172,7 @@ public class Main {
                                 systemManager.saveOrderToHistory(order, "order_history.csv");
 
                                 if (order instanceof DeliveryOrder dOrder) {
-                                    systemManager.assignDeliveryToDriver(dOrder, driver);
+                                   driver.addToPendingOrders(dOrder);
                                 }
 
                                 order.displayOrderDetails();
