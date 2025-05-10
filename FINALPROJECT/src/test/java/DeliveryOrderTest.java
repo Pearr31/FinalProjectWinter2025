@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DeliveryOrderTest {
     @Test
     public void testDeliveryOrderTotal() {
-        Driver d = new Driver("d", "p", "DRIVER01");
-        DeliveryOrder order = new DeliveryOrder(List.of(new MenuItem("Salad", "Healthy", 7.0)), d, "321 Lane");
+        Driver driver = new Driver("d", "p", "DRIVER01");
+        DeliveryOrder order = new DeliveryOrder(List.of(new MenuItem("Salad", "Healthy", 7.0)), driver, "321 Lane");
         Assertions.assertEquals(12.5, order.getTotalPrice());
     }
 
